@@ -25,8 +25,31 @@ function create(product) {
   });
 }
 
+function update(id, product) {
+  return new Promise((resolve, reject) => {
+    const index = products.findIndex((p) => p.id === id);
+
+    const updatedProduct = { id, ...product };
+    products[index] = updatedProduct;
+    writeDataToFile("./data/products.json", products);
+    resolve(updatedProduct);
+  });
+}
+
+function deleteP(id) {
+  return new Promise((resolve, reject) => {
+    const index = products.findIndex((p) => p.id === id);
+
+    products.splice(index, 1);
+    writeDataToFile("./data/products.json", products);
+    resolve(products);
+  });
+}
+
 module.exports = {
   findAll,
   findById,
   create,
+  update,
+  deleteP,
 };
